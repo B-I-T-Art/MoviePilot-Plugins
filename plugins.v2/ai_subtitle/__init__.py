@@ -24,8 +24,8 @@ from app.schemas.types import NotificationType, EventType
 from app.log import logger
 from app.plugins import _PluginBase
 from app.utils.system import SystemUtils
-from plugins.ai_subtitle.ffmpeg import Ffmpeg
-from plugins.ai_subtitle.translate.ollama_translate import Ollama
+from .ffmpeg import Ffmpeg
+from .translate.ollama_translate import Ollama
 
 
 class UserInterruptException(Exception):
