@@ -128,7 +128,9 @@ class Ai_Subtitle(_PluginBase):
             self._huggingface_proxy = config.get('proxy', True)
         self._translate_zh = config.get('translate_zh', False)
         if self._translate_zh:
-            self._ollama = Ollama()
+            self._ollama_base_url = config.get('ollama_base_url', 'http://127.0.0.1:11434')
+            self._ollama_model = config.get('ollama_model', 'huihui_ai/hunyuan-mt-abliterated:latest')
+            self._ollama = Ollama(base_url=self._ollama_base_url, model=self._ollama_model)
             self._enable_batch = config.get('enable_batch', True)
             self._batch_size = int(config.get('batch_size')) if config.get('batch_size') else 10
             self._context_window = int(config.get('context_window')) if config.get('context_window') else 5
@@ -1309,6 +1311,34 @@ class Ai_Subtitle(_PluginBase):
                                                     },
                                                     {
                                                         'component': 'VCol',
+                                                        'props': {'cols': 12, 'md': 6},
+                                                        'content': [
+                                                            {
+                                                                'component': 'VTextField',
+                                                                'props': {
+                                                                    'model': 'ollama_base_url',
+                                                                    'label': 'Ollama API地址',
+                                                                    'placeholder': 'http://127.0.0.1:11434'
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        'component': 'VCol',
+                                                        'props': {'cols': 12, 'md': 6},
+                                                        'content': [
+                                                            {
+                                                                'component': 'VTextField',
+                                                                'props': {
+                                                                    'model': 'ollama_model',
+                                                                    'label': 'Ollama模型名称',
+                                                                    'placeholder': 'huihui_ai/hunyuan-mt-abliterated:latest'
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        'component': 'VCol',
                                                         'props': {'cols': 12, 'md': 4, 'v-show': 'enable_batch'},
                                                         'content': [
                                                             {
@@ -1388,6 +1418,8 @@ class Ai_Subtitle(_PluginBase):
             "enable_merge": False,
             "enable_batch": True,
             "batch_size": 10,
+            "ollama_base_url": "http://127.0.0.1:11434",
+            "ollama_model": "huihui_ai/hunyuan-mt-abliterated:latest",
         }
 
     def get_api(self) -> List[Dict[str, Any]]:
