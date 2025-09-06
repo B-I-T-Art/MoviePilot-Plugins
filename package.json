@@ -1,7 +1,7 @@
 {
       "Ai_Subtitle": {
         "name": "AI字幕翻译中文",
-        "description": "使用whisper自动生成视频文件字幕,使用大模型翻译字幕成中文。",
+        "description": "使用whisper自动生成视频文件字幕,使用本地部署的ollama调用混元翻译大模型翻译字幕成中文。",
         "labels": "字幕",
         "version": "1.0",
         "icon": "aisubtitle.png",
